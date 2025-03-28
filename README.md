@@ -1,1 +1,1 @@
-# anvaiinstitutes static website code repositry
+# anvaiinstitutes static website code repository
