@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const encodedMessage = encodeURIComponent(whatsappMessage);
             
             // Open WhatsApp with the message
-            window.open(`https://wa.me/919701818923?text=${encodedMessage}`, '_blank');
+            window.open(`https://wa.me/919998895902?text=${encodedMessage}`, '_blank');
         });
     }
     
@@ -84,4 +84,69 @@ document.addEventListener('DOMContentLoaded', function() {
             showTestimonial(currentTestimonial);
         }, 5000);
     }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all timeline items
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    const arrow = document.querySelector('.arrow');
+    const lineContainer = document.querySelector('.line-container');
+    
+    // Set initial position of the arrow
+    arrow.style.top = '0px';
+    
+    // Function to check if an element is in viewport
+    function isInViewport(element) {
+        const rect = element.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.7
+        );
+    }
+    
+    // Function to update arrow position and active state
+    function updateTimeline() {
+        let activeItemFound = false;
+        
+        timelineItems.forEach((item, index) => {
+            // Remove active class from all items
+            item.classList.remove('active');
+            
+            // Check if item is in viewport
+            if (isInViewport(item) && !activeItemFound) {
+                // Add active class to the first visible item
+                item.classList.add('active');
+                activeItemFound = true;
+                
+                // Calculate arrow position
+                const itemRect = item.getBoundingClientRect();
+                const containerRect = lineContainer.getBoundingClientRect();
+                
+                // Position arrow at the center of the active item
+                const arrowPosition = (itemRect.top + itemRect.height / 2) - containerRect.top;
+                arrow.style.top = `${arrowPosition}px`;
+            }
+        });
+        
+        // If no item is active (all items are below viewport), set arrow to top
+        if (!activeItemFound && window.scrollY <= 100) {
+            arrow.style.top = '0px';
+        }
+        
+        // If all items are above viewport, set arrow to bottom
+        const lastItemRect = timelineItems[timelineItems.length - 1].getBoundingClientRect();
+        if (lastItemRect.bottom < 0) {
+            const containerHeight = lineContainer.offsetHeight;
+            arrow.style.top = `${containerHeight}px`;
+        }
+    }
+    
+    // Update on scroll
+    window.addEventListener('scroll', updateTimeline);
+    
+    // Initial update
+    updateTimeline();
+    
+    // Update on window resize
+    window.addEventListener('resize', updateTimeline);
 });
