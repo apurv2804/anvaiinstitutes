@@ -551,6 +551,8 @@ footer {
     min-width: 300px;
     list-style: disc;
     padding-left: 20px;
+    position: relative;
+    top: -200px;
 }
 
 .streams-list li {
@@ -1611,4 +1613,13 @@ footer {
         font-size: 14px;
         padding: 4px;
     }
+    .streams-list {
+        flex: 1;
+        min-width: 300px;
+        list-style: disc;
+        padding-left: 20px;
+        position: relative;
+        top: 0px;
+    }
+    
 }
